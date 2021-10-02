@@ -1,6 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="16374e35-a8f7-4f69-ad4d-6ead0ca14376" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo_app/lib/Components/Screens/listscontainer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo_app/lib/Screens/Main/userconsent.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ToDoApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ToDoApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/assets/applogo.png" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/assets/applogo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/assets/defaulticon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/assets/diet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/assets/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/assets/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/assets/workouts.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Auth/authstate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Components/Auth/authstate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Clips/HomeAppBar.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Clips/HomeSelectionBox.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Containers/workoutlistcheckbox.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Components/Containers/todolistcheckbox.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Containers/workoutlistcontainer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Components/Containers/todolistcontainer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Navbar/Navbar.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Screens/dietmealbox.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Screens/homeselectionboxes.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Screens/homeworkoutscontainer.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/Screens/workoutscontainer.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/SideBar/sidebar.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/SideBar/sidebar_menu.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Components/SideBar/sidebar_textbuilder.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/Models/sidebartextmodel.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/Screens/diethome.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/Screens/feedback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/Screens/settings.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/Screens/workouthome.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Data/resetcheckboxes.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Diet/diethome.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Diet/foodscreen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/feedback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/homescreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Screens/Main/homescreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/loginscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Screens/Main/loginscreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/settings.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/splashscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Screens/Main/splashscreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/usersettingsscreen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Main/usersignupscreen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Workouts/workouthome.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/Workouts/workoutsscreen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/Screens/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/Screens/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/todo_app/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1yvymaqJb1fcKDsCnF6vFzsKy9X" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/../WorkoutApp/todo_app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/todo_app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="16374e35-a8f7-4f69-ad4d-6ead0ca14376" name="Default Changelist" comment="" />
+      <created>1633146515540</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633146515540</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="158" y="198" width="1091" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1633147119077">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="158" y="198" width="1091" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633147119077" />
+    <state x="94" y="100" width="1193" height="840" key="AVDManager" timestamp="1633147068259">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="94" y="100" width="1193" height="840" key="AVDManager/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633147068259" />
+    <state width="1362" height="280" key="GridCell.Tab.0.bottom" timestamp="1633161399444">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="280" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633161399444" />
+    <state width="1362" height="280" key="GridCell.Tab.0.center" timestamp="1633161399444">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="280" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633161399444" />
+    <state width="1362" height="280" key="GridCell.Tab.0.left" timestamp="1633161399444">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="280" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633161399444" />
+    <state width="1362" height="280" key="GridCell.Tab.0.right" timestamp="1633161399444">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="280" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633161399444" />
+    <state x="191" y="165" key="SettingsEditor" timestamp="1633146951467">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="191" y="165" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633146951467" />
+    <state x="361" y="243" key="run.anything.popup" timestamp="1633155911435">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="361" y="243" key="run.anything.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1633155911435" />
   </component>
 </project>

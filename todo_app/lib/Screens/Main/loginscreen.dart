@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_app/Components/Auth/authstate.dart';
+import 'package:todo_app/Components/Auth/authstate.dart';
 import 'package:supabase/supabase.dart';
 import '../../constants.dart';
 

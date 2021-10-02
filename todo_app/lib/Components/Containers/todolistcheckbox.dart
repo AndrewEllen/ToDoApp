@@ -1,37 +1,42 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 
-class WorkoutListCheckbox extends StatefulWidget {
-  WorkoutListCheckbox({required this.day, required this.currentUserID, required this.listID,
-    required this.completed, required this.index, required this.completedliststring});
-  late String day, currentUserID, listID;
-  late List completedliststring;
+class ToDoListCheckbox extends StatefulWidget {
+  ToDoListCheckbox(
+      {required this.currentUserID,
+      required this.listID,
+      required this.completed,
+      required this.index,
+      required this.completedliststring,
+      required this.completedlist
+      });
+  late String currentUserID, listID;
+  late List completedliststring, completedlist;
   late int index;
   late bool completed;
 
   @override
-  _WorkoutListCheckboxState createState() => _WorkoutListCheckboxState();
+  _ToDoListCheckboxState createState() => _ToDoListCheckboxState();
 }
 
-class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
-
+class _ToDoListCheckboxState extends State<ToDoListCheckbox> {
   Future<void> _updateWorkouts(value) async {
     if (value == true) {
       widget.completedliststring[widget.index] = "true";
+      widget.completedlist[widget.index] = true;
     } else {
       widget.completedliststring[widget.index] = "false";
+      widget.completedlist[widget.index] = false;
     }
     final _listID = widget.listID;
     final _user = widget.currentUserID;
-    final _day = widget.day;
     final _completed = widget.completedliststring;
     final updates = {
-      "id": _listID,
+      "listid": _listID,
       'userid': _user,
-      'Day': _day,
       'Completed': _completed,
     };
-    final response = await supabase.from('userworkouts').upsert(updates).execute();
+    final response = await supabase.from('todolists').upsert(updates).execute();
     if (response.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),

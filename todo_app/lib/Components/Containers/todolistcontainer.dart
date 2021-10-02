@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 
-class WorkoutListContainer extends StatelessWidget {
-  WorkoutListContainer ({required this.workout, required this.margin});
+class ToDoListContainer extends StatelessWidget {
+  ToDoListContainer ({required this.workout, required this.margin});
   late String workout;
   late double margin;
 

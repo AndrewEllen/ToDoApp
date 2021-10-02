@@ -1,6 +1,6 @@
-# workout_app
+# todo_app
 
-An app to keep track of your diet and workouts
+A new Flutter application.
 
 ## Getting Started
 

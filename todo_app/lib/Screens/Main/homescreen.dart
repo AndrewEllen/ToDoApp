@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workout_app/Components/Clips/HomeAppBar.dart';
-import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
-import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
-import 'package:workout_app/Screens/Workouts/workouthome.dart';
+import 'package:todo_app/Components/Screens/listscontainer.dart';
 import '../../constants.dart';
 import '../../router.dart';
-import '../Diet/diethome.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,22 +12,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final username, avatar;
+  late List listcontents = [], completedlist = [], _completedlist = [];
+  late String listid = "";
   final currentUser = supabase.auth.user();
+  final _inputController = TextEditingController();
+  final _inputformkey = GlobalKey<FormState>();
+  late bool _completed;
   var _loading = false;
 
   void initState() {
-    _getProfile(currentUser!.id);
+    _getLists(currentUser!.id);
   }
 
-  Future<void> _getProfile(String userId) async {
+  Future<void> _getLists(String userId) async {
     setState(() {
       _loading = true;
     });
     final response = await supabase
-        .from('profiles')
+        .from('todolists')
         .select()
-        .eq('id', userId)
+        .eq('userid', userId)
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
@@ -39,15 +39,45 @@ class _HomeScreenState extends State<HomeScreen> {
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
-      username = response.data!['username'] as String;
-      avatar = response.data!['avatar_url'] as String;
-    } else {
-      avatar = "https://i.imgur.com/yKV9vpH.png";
-      username = currentUser?.email;
+      listid = response.data!['listid'] as String;
+      listcontents = response.data!['listcontents'] as List;
+      completedlist = response.data!['Completed'] as List;
+      _completedlist = completedlist;
+    }
+    var i;
+    for (i=0; i < completedlist.length; i++) {
+      if (completedlist[i] == "true"){
+        _completed = true;
+        _completedlist[i] = _completed;
+
+      } else {
+        _completed = false;
+        _completedlist[i] = _completed;
+      }
     }
     setState(() {
       _loading = false;
     });
+  }
+
+  Future<void> _updateLists() async {
+    final _listID = listid;
+    final _user = currentUser!.id;
+    final _listcontents = listcontents;
+    final _completed = completedlist;
+    final updates = {
+      'listid': _listID,
+      'userid': _user,
+      "listcontents": _listcontents,
+      "Completed": _completed,
+    };
+    final response = await supabase.from('todolists').upsert(updates).execute();
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 
   _logout() async {
@@ -66,137 +96,105 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
+      child: Scaffold(
+        backgroundColor: defaultBackgroundColour,
+        drawer: Drawer(
+          child: Scaffold(
             backgroundColor: defaultBackgroundColour,
-            body: Align(
-              alignment: Alignment.topCenter,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 160),
-                    child: HomeSelectionBox(
-                      containertext: "Diet",
-                      containerroutename: "/DietHome",
-                      containerroutewidget: DietHomeScreen(),
-                      containerimageloc: "assets/diet.png",
-                      tintcolour: dietTintColour,
-                      clip: false,
+            body: Center(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _logout();
+                    print("Clicked");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: WorkoutsAccentColour,
+                  ),
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 160),
-                    child: HomeSelectionBox(
-                      containertext: "Workouts",
-                      containerroutename: "/WorkoutHome",
-                      containerroutewidget: WorkoutHomeScreen(),
-                      containerimageloc: "assets/workouts.png",
-                      tintcolour: workoutsTintColour,
-                      clip: true,
-                    ),
-                  ),
-                  Container(
-                    height: 200,
-                    child: ClipPath(
-                      clipper: HomeAppBarShadowClip(),
-                      child: CustomPaint(
-                        painter: HomeAppBarPainter(),
-                        child: ClipPath(
-                          clipper: HomeAppBarClip(),
-                          child: Center(
-                            child: Container(
-                              color: HomeAppbarColour,
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            FadeRouter(
-                                              routeName: '/usersettings',
-                                              screen: UserSettings(),
-                                            ));
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 23),
-                                        width: 80,
-                                        height: 80,
-                                        decoration: BoxDecoration(
-                                          //color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(45),
-                                          ),
-                                          image: DecorationImage(
-                                            image: NetworkImage(_loading
-                                                ? 'https://i.imgur.com/yKV9vpH.png'
-                                                : avatar),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            FadeRouter(
-                                              routeName: '/usersettings',
-                                              screen: UserSettings(),
-                                            ));
-                                      },
-                                      child: Container(
-                                        margin:
-                                            EdgeInsets.only(right: 0, top: 20),
-                                        child: Text(
-                                          'User: ${_loading ? currentUser?.email : username}',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: WorkoutsAccentColour,
-                                            shadows: [
-                                              Shadow(
-                                                blurRadius: 1,
-                                                color: Colors.black,
-                                                offset: Offset(1, 2),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  /*Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 50),
-                      child: MaterialButton(
-                        color: Colors.black,
-                        onPressed: () {
-                          _logout();
-                        },
-                        child: Text(
-                          'Logout',
-                          style: TextStyle(
-                            color: WorkoutsAccentColour,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )*/
-                ],
+                ),
               ),
-            )));
+            ),
+          ),
+        ),
+        body: ListView(
+          children: [
+            Align(
+                alignment: Alignment.topCenter,
+                child: _loading? Container(
+                    width: double.infinity,
+                    height: 500,
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppbarColour,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    )) : Container(
+                  child: ToDoContainer(
+                    widthvalue: 670,
+                    listID: _loading? "loading..." : listid,
+                    currentUserID: _loading? "loading..." : currentUser!.id,
+                    listcontents: _loading? ["loading..."] :  listcontents,
+                    completedlist: _loading? ["loading..."] : _completedlist,
+                    completedliststring: _loading? ["loading..."] : completedlist,
+                  ),
+                )
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 60,
+                margin: EdgeInsets.only(left:10,right:10),
+                decoration: BoxDecoration(
+                  color: AppbarColour,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Form(
+                  key: _inputformkey,
+                  child: TextFormField(
+                    onFieldSubmitted: (value) async {
+                      if (_inputformkey.currentState!.validate()) {
+                        listcontents.add(value);
+                        completedlist.add("false");
+                        await _updateLists();
+                        _getLists(currentUser!.id);
+                        _inputController.clear();
+                      }
+                    },
+                    enableInteractiveSelection : true,
+                    controller: _inputController,
+                    cursorColor: Colors.white,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Create New List',
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.4),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return 'Invalid List Name';
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

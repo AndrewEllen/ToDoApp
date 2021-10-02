@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../constants.dart';
 
 class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
-  late var username;
+  late var userIDcheck;
   final currentUser = supabase.auth.user();
 
 
@@ -18,9 +18,9 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   @override
   Future<void> onAuthenticated(Session session) async {
     final currentUser = supabase.auth.user();
-    await _getProfile(currentUser!.id);
+    await _checkProfile(currentUser!.id);
 
-    if (username.length > 0) {
+    if (userIDcheck.length > 0) {
       if (mounted) {
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/home', (route) => false);
@@ -29,27 +29,27 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
     else {
       if (mounted) {
         Navigator.of(context).pushNamedAndRemoveUntil(
-            '/signup', (route) => false);
+            '/consent', (route) => false);
       }
     }
   }
 
-  Future<void> _getProfile(String userId) async {
+  Future<void> _checkProfile(String userId) async {
     final response = await supabase
         .from('profiles')
         .select()
-        .eq('id', userId)
+        .eq('userid', userId)
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
-    if (response.data?['username'] != null) {
-      username = response.data?['username'] as String;
+    if (response.data?['userid'] != null) {
+      userIDcheck = response.data?['userid'] as String;
     }
     else {
-      username = "";
+      userIDcheck = "";
     }
   }
 

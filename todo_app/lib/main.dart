@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:workout_app/Screens/Main/homescreen.dart';
-import 'package:workout_app/Screens/Main/loginscreen.dart';
-import 'package:workout_app/Screens/Main/splashscreen.dart';
-import 'Screens/Main/usersignupscreen.dart';
+import 'package:todo_app/Screens/Main/homescreen.dart';
+import 'package:todo_app/Screens/Main/loginscreen.dart';
+import 'package:todo_app/Screens/Main/splashscreen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:todo_app/Screens/Main/userconsent.dart';
 import 'constants.dart';
 
 Future<void> main() async {
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/': (_) => const SplashScreen(),
         '/login': (_) => const LoginScreen(),
         '/home': (_) => const HomeScreen(),
-        '/signup': (_) => UserSignup(),
+        '/consent': (_) => UserConsent(),
       },
     );
   }
