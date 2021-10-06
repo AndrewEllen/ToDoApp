@@ -11,7 +11,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List listids = [], listnames = [];
-  late String id;
+  late String userlistid;
+  late String listid;
   final currentUser = supabase.auth.user();
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     };
     final response = await supabase.from('todolists').upsert(updates).execute();
     if (response.error != null) {
+      print("AE Error Code 4");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
@@ -45,12 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
+      print("AE Error Code 3");
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
       if (response.data['new'] == true) {
-        id = response.data['listid'] as String;
+        listid = response.data['listid'] as String;
         _new = response.data['new'] as bool;
       }
     }
@@ -67,11 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
+      print("AE Error Code 2");
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
-      id = response.data['id'] as String;
+      userlistid = response.data['id'] as String;
       listids = response.data!['listids'] as List;
       listnames = response.data!['listnames'] as List;
     }
@@ -84,15 +88,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final _listIDs = listids;
     final _user = currentUser!.id;
     final _listnames = listnames;
-    final _ID = id;
+    final _ID = userlistid;
     final updates = {
       'listids': _listIDs,
       'userid': _user,
       "listnames": _listnames,
       "id": _ID,
     };
-    final response = await supabase.from('todolistlinks').upsert(updates).execute();
+    final response = await supabase.from('todolistlinks').update(updates).execute();
     if (response.error != null) {
+      print("AE Error Code 1");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
@@ -100,16 +105,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _setnewlistfalse(String listid) async {
+  Future<void> _setnewlistfalse(String listId) async {
+    print(listid);
     final _user = currentUser!.id;
-    final _ID = listid;
     final updates = {
-      "listid": _ID,
-      'userid': _user,
+      "userid": _user,
       "new": false,
     };
-    final response = await supabase.from('todolists').upsert(updates).execute();
+    final response = await supabase.from('todolists').update(updates).execute();
     if (response.error != null) {
+      print("AE Error Code 5");
+      print(listid);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
@@ -177,7 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     listIDs: _loading? ["loading..."] : listids,
                     currentUserID: _loading? "loading..." : currentUser!.id,
                     listnames: _loading? ["loading..."] :  listnames,
-                    ID: _loading? "loading..." : id,
+                    //TODO review below variable
+                    ID: _loading? "loading..." : userlistid,
                   ),
                 )
             ),
@@ -201,9 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                         await _createlist();
                         await _getlistid(currentUser!.id);
-                        await _setnewlistfalse(id);
-                        listids.add(id);
+                        print(listid);
+                        listids.add(listid);
                         listnames.add(value);
+                        await _setnewlistfalse(listid);
                         await _updateLists();
                         await _getLists(currentUser!.id);
                         _inputController.clear();

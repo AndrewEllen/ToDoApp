@@ -4,7 +4,8 @@ import 'package:todo_app/Components/Screens/listscontainer.dart';
 import '../../constants.dart';
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key}) : super(key: key);
+  const ListScreen({Key? key, required this.listid}) : super(key: key);
+  final String listid;
 
   @override
   _ListScreenState createState() => _ListScreenState();
@@ -12,7 +13,7 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   late List listcontents = [], completedlist = [], _completedlist = [];
-  late String listid = "";
+  late String listid = widget.listid;
   final currentUser = supabase.auth.user();
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
@@ -31,6 +32,7 @@ class _ListScreenState extends State<ListScreen> {
         .from('todolists')
         .select()
         .eq('userid', userId)
+        .eq('listid', listid)
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
@@ -38,7 +40,6 @@ class _ListScreenState extends State<ListScreen> {
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
-      listid = response.data!['listid'] as String;
       listcontents = response.data!['listcontents'] as List;
       completedlist = response.data!['Completed'] as List;
       _completedlist = completedlist;
@@ -174,7 +175,7 @@ class _ListScreenState extends State<ListScreen> {
                     ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                      hintText: 'Create New List',
+                      hintText: 'Create New Item',
                       hintStyle: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 0.4),
                       ),
@@ -184,7 +185,7 @@ class _ListScreenState extends State<ListScreen> {
                     ),
                     validator: (String? value) {
                       if (value!.isEmpty) {
-                        return 'Invalid List Name';
+                        return 'Invalid Item';
                       }
                     },
                   ),

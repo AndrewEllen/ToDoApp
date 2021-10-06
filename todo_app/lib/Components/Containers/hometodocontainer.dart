@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Components/Containers/todolistcheckbox.dart';
 import 'package:todo_app/Components/Containers/todolistcontainer.dart';
+import 'package:todo_app/Screens/Main/listview.dart';
 import '../../constants.dart';
 
 class HomeToDoContainer extends StatefulWidget {
@@ -40,6 +40,15 @@ class _HomeToDoContainerState extends State<HomeToDoContainer> {
         backgroundColor: Colors.red,
       ));
     }
+  }
+
+  Future<void> _deletelist(listID) async {
+    await supabase
+        .from('todolists')
+        .delete()
+        .eq('listid', listID)
+        .eq('userid', widget.currentUserID)
+        .execute();
   }
 
   @override
@@ -89,6 +98,7 @@ class _HomeToDoContainerState extends State<HomeToDoContainer> {
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         setState(() {
+          _deletelist(widget.listIDs[index]);
           widget.listnames.removeAt(index);
           widget.listIDs.removeAt(index);
         });
@@ -105,10 +115,21 @@ class _HomeToDoContainerState extends State<HomeToDoContainer> {
       ),
       child: Stack(
         children: [
-          Container(
-            child: ToDoListContainer(
-              workout: widget.listnames[index],
-              margin: 0,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListScreen(listid: widget.listIDs[index],
+                  ),
+                )
+              );
+            },
+            child: Container(
+              child: ToDoListContainer(
+                workout: widget.listnames[index],
+                margin: 0,
+              ),
             ),
           ),
         ],
