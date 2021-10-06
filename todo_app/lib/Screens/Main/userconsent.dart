@@ -11,12 +11,12 @@ class UserConsent extends StatefulWidget {
 class _UserConsentState extends State<UserConsent> {
   final currentUser = supabase.auth.user();
 
-  Future<void> _createlist() async {
+  Future<void> _createnewlist() async {
     print("Testing List");
     final updates = {
       'userid': currentUser!.id,
     };
-    final response = await supabase.from('todolists').upsert(updates).execute();
+    final response = await supabase.from('todolistlinks').upsert(updates).execute();
     if (response.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),
@@ -41,7 +41,7 @@ class _UserConsentState extends State<UserConsent> {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully created profile!')));
     await {
-    _createlist()
+    _createnewlist()
     };
     Timer(Duration(milliseconds: 800), () {
     Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);

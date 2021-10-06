@@ -1,59 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/Components/Containers/hometodocontainer.dart';
-import 'package:todo_app/constants.dart';
-import '../../router.dart';
+import 'package:todo_app/Components/Screens/listscontainer.dart';
+import '../../constants.dart';
 
-class HomeScreen extends StatefulWidget {
+class ListScreen extends StatefulWidget {
+  const ListScreen({Key? key}) : super(key: key);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ListScreenState createState() => _ListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late List listids = [], listnames = [];
-  late String id;
+class _ListScreenState extends State<ListScreen> {
+  late List listcontents = [], completedlist = [], _completedlist = [];
+  late String listid = "";
   final currentUser = supabase.auth.user();
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
-  late bool _new = true;
+  late bool _completed;
   var _loading = false;
 
   void initState() {
     _getLists(currentUser!.id);
-  }
-
-  Future<void> _createlist() async {
-    print("Testing List");
-    final updates = {
-      'userid': currentUser!.id,
-    };
-    final response = await supabase.from('todolists').upsert(updates).execute();
-    if (response.error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error!.message),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
-
-  Future<void> _getlistid(String userId) async {
-    final response = await supabase
-        .from('todolists')
-        .select()
-        .eq('userid', userId)
-        .eq('new', _new)
-        .single()
-        .execute();
-    if (response.error != null && response.status != 406) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(response.error!.message)));
-    }
-    if (response.data != null) {
-      if (response.data['new'] == true) {
-        id = response.data['listid'] as String;
-        _new = response.data['new'] as bool;
-      }
-    }
   }
 
   Future<void> _getLists(String userId) async {
@@ -61,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _loading = true;
     });
     final response = await supabase
-        .from('todolistlinks')
+        .from('todolists')
         .select()
         .eq('userid', userId)
         .single()
@@ -71,9 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
-      id = response.data['id'] as String;
-      listids = response.data!['listids'] as List;
-      listnames = response.data!['listnames'] as List;
+      listid = response.data!['listid'] as String;
+      listcontents = response.data!['listcontents'] as List;
+      completedlist = response.data!['Completed'] as List;
+      _completedlist = completedlist;
+    }
+    var i;
+    for (i=0; i < completedlist.length; i++) {
+      if (completedlist[i] == "true"){
+        _completed = true;
+        _completedlist[i] = _completed;
+
+      } else {
+        _completed = false;
+        _completedlist[i] = _completed;
+      }
     }
     setState(() {
       _loading = false;
@@ -81,32 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _updateLists() async {
-    final _listIDs = listids;
+    final _listID = listid;
     final _user = currentUser!.id;
-    final _listnames = listnames;
-    final _ID = id;
+    final _listcontents = listcontents;
+    final _completed = completedlist;
     final updates = {
-      'listids': _listIDs,
+      'listid': _listID,
       'userid': _user,
-      "listnames": _listnames,
-      "id": _ID,
-    };
-    final response = await supabase.from('todolistlinks').upsert(updates).execute();
-    if (response.error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error!.message),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
-
-  Future<void> _setnewlistfalse(String listid) async {
-    final _user = currentUser!.id;
-    final _ID = listid;
-    final updates = {
-      "listid": _ID,
-      'userid': _user,
-      "new": false,
+      "listcontents": _listcontents,
+      "Completed": _completed,
     };
     final response = await supabase.from('todolists').upsert(updates).execute();
     if (response.error != null) {
@@ -172,12 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AppbarColour,
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     )) : Container(
-                  child: HomeToDoContainer(
+                  child: ToDoContainer(
                     widthvalue: 670,
-                    listIDs: _loading? ["loading..."] : listids,
+                    listID: _loading? "loading..." : listid,
                     currentUserID: _loading? "loading..." : currentUser!.id,
-                    listnames: _loading? ["loading..."] :  listnames,
-                    ID: _loading? "loading..." : id,
+                    listcontents: _loading? ["loading..."] :  listcontents,
+                    completedlist: _loading? ["loading..."] : _completedlist,
+                    completedliststring: _loading? ["loading..."] : completedlist,
                   ),
                 )
             ),
@@ -196,20 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextFormField(
                     onFieldSubmitted: (value) async {
                       if (_inputformkey.currentState!.validate()) {
-                        setState(() {
-                          _loading = true;
-                        });
-                        await _createlist();
-                        await _getlistid(currentUser!.id);
-                        await _setnewlistfalse(id);
-                        listids.add(id);
-                        listnames.add(value);
+                        listcontents.add(value);
+                        completedlist.add("false");
                         await _updateLists();
-                        await _getLists(currentUser!.id);
+                        _getLists(currentUser!.id);
                         _inputController.clear();
-                        setState(() {
-                          _loading = false;
-                        });
                       }
                     },
                     enableInteractiveSelection : true,
@@ -243,5 +197,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
