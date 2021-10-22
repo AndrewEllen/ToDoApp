@@ -8,8 +8,20 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:todo_app/Screens/Main/userconsent.dart';
 import 'Screens/Main/listview.dart';
 import 'constants.dart';
+import 'dart:io';
+
+//https://stackoverflow.com/questions/49648022/check-whether-there-is-an-internet-connection-available-on-flutter-app
 
 Future<void> main() async {
+  try {
+    final result = await InternetAddress.lookup('https://supabase.io/');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      print("Connected");
+    }
+  } on SocketException catch (_) {
+    print("Not Connected");
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "variables.env");
   String _url = dotenv.get('URL');

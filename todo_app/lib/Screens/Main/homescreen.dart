@@ -90,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final _listnames = listnames;
     final _ID = userlistid;
     final updates = {
-      'listids': _listIDs,
-      'userid': _user,
-      "listnames": _listnames,
       "id": _ID,
+      'userid': _user,
+      'listids': _listIDs,
+      "listnames": _listnames,
     };
     final response = await supabase.from('todolistlinks').update(updates).execute();
     if (response.error != null) {
